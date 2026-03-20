@@ -1,0 +1,1 @@
+openssl req -new -key privkey.pem -subj  "/C=AR/O=TUTTO /CN=GFLOW/serialNumber=CUIT 30636764155" -out computadora.csr -config openssl.cnf

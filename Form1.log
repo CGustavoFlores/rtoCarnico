@@ -1,0 +1,5 @@
+Línea 52: la clase MSComDlg.CommonDialog del control CommonDialog1 no era una clase de control cargada.
+Línea 55: el nombre de la propiedad _ExtentX de CommonDialog1 no es válido.
+Línea 56: el nombre de la propiedad _ExtentY de CommonDialog1 no es válido.
+Línea 57: el nombre de la propiedad _Version de CommonDialog1 no es válido.
+Línea 58: el nombre de la propiedad Filter de CommonDialog1 no es válido.
