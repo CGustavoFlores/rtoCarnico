@@ -55,7 +55,7 @@ End If
         frmOpcionesExportacion.Show vbModal
         Unload frmOpcionesExportacion
         If ModVariables.xEstadoComprobante <> "CANCELA" Then
-            Dialogo.FileName = "" 'para que limpie el nombre, sino queda el último usado
+            Dialogo.FileName = "" 'para que limpie el nombre, sino queda el ï¿½ltimo usado
             Dialogo.Flags = cdlOFNOverwritePrompt
             Dialogo.FilterIndex = 0 'XLS
             Dialogo.ShowSave
@@ -65,10 +65,10 @@ End If
    End If
 Exit Sub
 PROCERROR:
-    If Err.Number = cdlCancel Then 'se presionó CANCELAR
+    If Err.Number = cdlCancel Then 'se presionï¿½ CANCELAR
         Exit Sub
     Else
-        MsgBox "Ha ocurrido un error en la generación de la exportación", vbExclamation, "Atención"
+        MsgBox "Ha ocurrido un error en la generaciï¿½n de la exportaciï¿½n", vbExclamation, "Atenciï¿½n"
     End If
 End Sub
 
@@ -154,7 +154,17 @@ With RsRead
         xFechaVenceViaje = IIf(IsNull(![FechaVencimiento]), 0, ![FechaVencimiento])
         xNROCRE = ![CRE]
         XNROINTERNORC = ![NroInternoElectronico]
-        XarchivoQR = "C:\WsRe\imagenes\QR-" & Trim(Str(XNROINTERNORC)) & ".png"
+        ' Leer QRPath desde VTAREMITOELECTRONICO (guardado por GFlowRC al generar el remito)
+        Dim rsQR As ADODB.Recordset
+        Set rsQR = New ADODB.Recordset
+        rsQR.Open "SELECT QRPath FROM VTAREMITOELECTRONICO WHERE NroInternoElectronico = " & XNROINTERNORC, ModSQL.ConexionActiva, adOpenForwardOnly, adLockReadOnly
+        If Not rsQR.EOF And Not IsNull(rsQR!QRPath) And Trim(rsQR!QRPath) <> "" Then
+            XarchivoQR = Trim(rsQR!QRPath)
+        Else
+            XarchivoQR = "C:\_GflowRC\CODIGOQR.png"
+        End If
+        rsQR.Close
+        Set rsQR = Nothing
         
         'xLeyendaAlFinal = Trim(![leyendaenremito])
         xLugarDeDescarga = Trim(![LugardeDescarga])
@@ -166,7 +176,7 @@ With RsRead
         End If
     Else
         .Close
-        MsgBox "No se encontró el Nº de Remito", vbInformation, "Atención"
+        MsgBox "No se encontrï¿½ el Nï¿½ de Remito", vbInformation, "Atenciï¿½n"
         Unload Me
     End If
 End With
